@@ -43,5 +43,5 @@ t.seconds/3600
 
 #### Can add datetimes and timedeltas and format it as a string
 ```python
-str(toady + t)
+str(today + t)
 ```
