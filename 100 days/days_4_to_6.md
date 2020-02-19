@@ -62,7 +62,7 @@ Counter(Jose).most_common(5)
 
 ### Deque 
 
-#### Deque is more efficient when dealing with large lists
+#### Deque is more efficient for inserting and removing when dealing with large lists
 
 ```python
 lst = list(range(10000000))
@@ -79,4 +79,76 @@ def insert_and_delete(ds):
 %timeit insert_and_delete(lst)
 
 %timeit insert_and_delete(deq)  # This is 2 orders of magnitude faster. Can notice this in the terminal
+```
+
+## Day 5
+
+### Using some of the techniques above
+
+#### But first a new library I haven't used before for scraping from web pages -> urllib
+
+```python
+import urllib.request
+
+# This command extracts raw html from a webpage
+urllib.request.urlopen('https://bbc.co.uk').read()
+```
+
+```python
+from urllib.request import urlretrieve  # The actual function from this library we are using today
+```
+
+```python
+movie_data = 'https://raw.githubusercontent.com/pybites/challenges/solutions/13/movie_metadata.csv'
+movies_csv = 'movies.csv'
+urlretrieve(movie_data, movies_csv)
+```
+
+#### Want to create a namedtuple that will yield metadata about movies
+
+```python
+Movie = namedtuple('Movie', 'title year score duration director_facebook_likes')
+```
+
+#### Creating namedtuples for each director with some interesting attributes
+
+```python
+def get_movies_by_director(data=movies_csv):
+    """Extracts all movies from csv and stores them in a dictionary
+       where keys are directors, and values is a list of movies (named tuples)"""
+    directors = defaultdict(list)
+    with open(data, encoding='utf-8') as f:
+        for line in csv.DictReader(f):
+            try:
+                director = line['director_name']
+                movie = line['movie_title'].replace('\xa0', '')
+                year = int(line['title_year'])
+                score = float(line['imdb_score'])
+                duration = int(line['duration'])
+                director_facebook_likes = int(line['director_facebook_likes'])
+            except ValueError:
+                continue
+
+            m = Movie(title=movie, year=year, score=score, duration=duration, director_facebook_likes=director_facebook_likes)
+            directors[director].append(m)
+
+    return directors
+
+directors = get_movies_by_director()
+```
+
+#### Looking up my favourite director (don't know that many!)
+
+```python
+directors['Quentin Tarantino']
+```
+
+#### Counting the director with the most movies
+
+```python
+cnt = Counter()
+for director, movies in directors.items():
+    cnt[director] += len(movies)
+
+cnt.most_common(5)
 ```
