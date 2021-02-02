@@ -14,6 +14,7 @@ DOCS:
 
 LAST EDITED:
         26-10-2020 --> Creation
+        02-02-2021 --> Proper configuration of logger
 
 CONTACT:
         Michael Taylor: mspacet@protonmail.com
@@ -24,21 +25,26 @@ CONTACT:
 
 import pandas as pd
 import numpy as np
-import matploblib.pyplot as plt
+import matplotlib.pyplot as plt
 import os
+import warnings
 import logging
+
+# ------ Display options and suppressing warnings ------ #
+
+pd.set_option('display.max_columns', 250)
+pd.set_option('display.max_rows', 250)
+pd.options.mode.chained_assignment = None
+warnings.simplefilter(action='ignore',
+                      category=FutureWarning)
 
 # ------ Configuration of logs ------ #
 
-logging.basicConfig(filename='./project_logs.log',
-                    format='%(asctime)s - %(levelname)s - %(message)s',
-                    level=logging.INFO)
-
-console = logging.StreamHandler()
-console.setLevel(logging.DEBUG)
-formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-console.setFormatter(formatter)
-# logging.getLogger('').addHandler(console)
+logging.basicConfig(format='%(levelname)s - %(asctime)s - %(filename)s - %(funcName)s - %(message)s',
+                    datefmt='%Y-%m-%d %H:%M:%S',
+                    handlers=[logging.FileHandler('logs.log'),
+                              logging.StreamHandler()],
+                    level=10)  # level options: 10 - debug, 20 - info, 30 - warning, 40 - error & 50 - critical
 
 # ------ Setting up directories and defining variables ------ #
 
