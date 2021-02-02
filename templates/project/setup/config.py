@@ -14,7 +14,7 @@ DOCS:
 
 LAST EDITED:
         26-10-2020 --> Creation
-        02-02-2021 --> Proper configuration of logger
+        02-02-2021 --> Proper configuration of logger and updated paths
 
 CONTACT:
         Michael Taylor: mspacet@protonmail.com
@@ -49,16 +49,16 @@ logging.basicConfig(format='%(levelname)s - %(asctime)s - %(filename)s - %(funcN
 # ------ Setting up directories and defining variables ------ #
 
 # Define cwd to be the current working directory
-cwd = os.getcwd()
+project_path = os.path.realpath(os.getcwd())
 
 # Defining data paths
-data_path = cwd + '/data/'
+data_path = project_path + '/data/'
 raw_data_path = data_path + 'raw/'
 interim_data_path = data_path + 'interim/'
 processed_data_path = data_path + 'processed/'
 
 # Defining path to save plots in
-plots_path = cwd + '/plots'
+plots_path = project_path + '/plots/'
 
 # Defining path where .sav files are located
-models_path = cwd + '/models/'
+models_path = project_path + '/models/'

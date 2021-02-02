@@ -22,6 +22,8 @@ CONTACT:
 
 # ------ Importing required libraries ------ #
 
+from setup.config import *
+
 import pandas as pd
 import numpy as np
 import matploblib.pyplot as plt
