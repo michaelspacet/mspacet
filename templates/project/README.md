@@ -17,7 +17,7 @@ Repository:
 Project Structure
 ------------
 
-    ├── data (not tracked)
+    ├── data
     │   ├── raw            -> Raw data with no pre-processing
     │   ├── interim        -> Any data that has been pre-processed
     │   ├── processed      -> Output data
@@ -37,6 +37,7 @@ Project Structure
     │
     ├── tests              -> Tests for src code
     │
+    ├── .gitignore         -> .gitignore
     ├── Dockerfile         -> Dockerfile for building images
     ├── logs.log           -> Log file (not tracked)
     ├── README.md          -> Top level README file
